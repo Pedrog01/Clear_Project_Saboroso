@@ -1,17 +1,23 @@
 <!DOCTYPE HTML>
 <html>
-<%- include('head'); -%>
+
+<%- include("head") -%>
 
 <body>
 
-    <div class="gtco-loader"></div>
+	<div class="gtco-loader"></div>
 
-    <div id="page">
+	<div id="page">
 
-        <%- include('header-menu'); -%>
+	<%- include('header-menu')-%>
 
-        <% if (typeof isHome === 'boolean' && isHome) { %>
-            <%- include('header-index'); -%>
-        <% } else { %>
-            <%- include('header'); -%>
-        <% } %>
+    <%if (typeof isHome === 'boolean' && isHome) { %>
+        <%- include('header-index')-%>
+    <% } else { %>
+        <%- include('header')-%>
+    <% } %>
+    
+
+  
+
+ 
