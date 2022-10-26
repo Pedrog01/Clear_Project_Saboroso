@@ -3,7 +3,9 @@ var users = require('./../inc/users');
 var admin = require('./../inc/admin')
 var menus = require('./../inc/menus')
 var reservations = require('./../inc/reservations');
+var contacts = require('./../inc/contacts')
 var moment = require('moment');
+var emails = require('./../inc/emails')
 var router = express.Router();
 
 
@@ -81,17 +83,47 @@ router.get('/login', function(req, res, next){
 
 router.get('/contacts', function(req, res, next){
 
-    res.render('admin/contacts',admin.getParams(req));
+    contacts.getContacts().then(data=>{
 
+        res.render('admin/contacts',admin.getParams(req, {
+            data
+        }));
+
+    });
+
+});
+
+router.delete('/contacts/:id', function(req, res, next){
+
+    contacts.delete(req.params.id).then(results=>{
+        res.send(results);
+    }).catch(err=>{
+        res.send(err);
+    })
 
 });
 
 router.get('/emails', function(req, res, next){
 
-    res.render('admin/emails', admin.getParams(req));
+    emails.getEmails().then(data=>{
 
+        res.render('admin/emails', admin.getParams(req, {
+            data
+        }));
+
+    });
 
 });
+
+router.delete('/emails/:id', function(req, res, nexct){
+
+    emails.delete(req.params.id).then(results=>{
+        res.send(results);
+    }).catch(err=>{
+        res.send(err);
+    })
+
+})
 
 router.get('/menus', function(req, res, next){
 
@@ -135,12 +167,19 @@ router.delete('/menus/:id', function(req, res, next){
 
 router.get('/reservations', function(req, res, next){
 
-    reservations.getReservations().then(data=> {
+    let start = (req.query.start) ? req.query.start : moment().subtract(1, 'year').format('YYYY-MM-DD');
+    let end = (req.query.end) ? req.query.end : moment().format('YYYY-MM-DD');
+
+    reservations.getReservations(req).then(pag=> {
 
         res.render('admin/reservations', admin.getParams(req,{
-            date: {},
-            data,
-            moment
+            date: {
+                start,
+                end
+            },
+            data: pag.data,
+            moment,
+            links: pag.links
         }));
 
     });
@@ -200,8 +239,7 @@ router.post('/users', function(req, res, next){
 
 });
 
-router.post("/users/password-change", function(req,res, next){
-
+router.post('/users/password-change', function(req, res, next){
 
     users.changePassword(req).then(results=>{
 
@@ -213,9 +251,9 @@ router.post("/users/password-change", function(req,res, next){
             error: err
         });
 
-    });
+        });
 
-});
+    })
 
 router.delete('/users/:id', function(req, res, next){
 
