@@ -1,4 +1,4 @@
-var conn = require('./db');
+var conn = require ('./db')
 
 module.exports = {
 
@@ -32,14 +32,6 @@ module.exports = {
         menus: req.menus,
         user: req.session.user
        }, params); 
-
-    },
-    getParams(req,params){
-
-        return Object.assign({}, {
-            menus: req.menus,
-            user:req.session.user
-        },params);
 
     },
 
