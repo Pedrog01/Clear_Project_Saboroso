@@ -136,5 +136,75 @@ class Pagination {
 
     }
 
+    /*
+    getNavigation(params) {
+
+        let limitPagesNav = 5;
+        let links = [];
+
+        if (this.getTotalPages() > limitPagesNav && this.getCurrentPage() > 1) {
+
+            let queryString = this.getQueryString(Object.assign({}, params, {
+                page: this.getCurrentPage() - 1
+            }));
+
+            links.push({
+                href: `?${queryString}`,
+                text: '«'
+            });
+
+        }
+
+        let i = 0;
+        let page;
+        let startPageNav = (this.getTotalPages() < limitPagesNav) ? 1 : this.getCurrentPage();
+        let previewTotalPagesNav = this.getTotalPages() - (startPageNav - 1);
+
+        if (previewTotalPagesNav < limitPagesNav) {
+            startPageNav = startPageNav - (limitPagesNav - previewTotalPagesNav);
+        }
+
+        if (startPageNav < 0) startPageNav = 1;
+
+        while (i < limitPagesNav) {
+
+            page = startPageNav + i;
+
+            if (page > this.getTotalPages()) {
+                break;
+            }
+
+            let queryString = this.getQueryString(Object.assign({}, params, { 
+                page
+            }));
+
+            links.push({
+                href: `?${queryString}`,
+                text: page,
+                active: (page === this.getCurrentPage())
+            });
+
+            i++;
+
+        }
+
+        if (this.getCurrentPage() < this.getTotalPages()) {
+
+            let queryString = this.getQueryString(Object.assign({}, params, {
+                page: this.getCurrentPage() + 1
+            }));
+
+            links.push({
+                href: `?${queryString}`,
+                text: '»'
+            });
+
+        }
+
+        return links;
+
+    }
+    */
 }
- module.exports = Pagination;
+
+module.exports = Pagination;
